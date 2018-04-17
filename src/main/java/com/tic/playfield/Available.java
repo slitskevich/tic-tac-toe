@@ -15,6 +15,8 @@ public class Available {
 	/** The list of available rows. Collection contains an item for every row. The item is the list of column indices in the row available for the move */
 	private List<List<Integer>> availableRows;
 	
+	private List<Integer> availableRowIndices;
+	
 	/**
 	 * Instantiates a new instance
 	 *
@@ -22,7 +24,9 @@ public class Available {
 	 */
 	public Available(int size) {
 		availableRows = new ArrayList<List<Integer>>(size);
+		availableRowIndices = new ArrayList<Integer>(size);
 		for (int i = 0; i < size; i += 1) {
+			availableRowIndices.add(i);
 			List<Integer> row = new ArrayList<Integer>(size);
 			for (int j = 0; j < size; j += 1) {
 				row.add(j);
@@ -39,9 +43,9 @@ public class Available {
 	 */
 	public Position pickRandomAvailablePosition() throws PlayException {
 		Position result = null;
-		int rowIndex = Random.pickIndex(availableRows);
-		List<Integer> availableColumns = availableRows.get(rowIndex);
-		if (availableColumns.size() > 0) {
+		if (availableRowIndices.size() > 0) {
+			int rowIndex = availableRowIndices.get(Random.pickIndex(availableRowIndices));
+			List<Integer> availableColumns = availableRows.get(rowIndex);
 			int columnIndex = Random.pickIndex(availableColumns);
 			result = new Position(rowIndex, availableColumns.get(columnIndex));
 		} else {
@@ -62,7 +66,7 @@ public class Available {
 	}
 	
 	/**
-	 * Marks postion as unavailable. Essentially just removes corresponding index
+	 * Marks position as unavailable. Essentially just removes corresponding index
 	 *
 	 * @param selection the position to be marked as unavailable
 	 */
@@ -70,5 +74,8 @@ public class Available {
 		List<Integer> availableColumns = availableRows.get(selection.getRow());
 		int index = availableColumns.indexOf(selection.getColumn());
 		availableColumns.remove(index);
+		if (availableColumns.size() == 0) {
+			availableRowIndices.remove(new Integer(selection.getRow()));
+		}
 	}
 }
