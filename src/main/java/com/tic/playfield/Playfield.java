@@ -68,7 +68,7 @@ public class Playfield {
 	}
 	
 	/**
-	 * @return the result staus message
+	 * @return the result status message
 	 */
 	public String getResultMessage() {
 		if (winnable.getWinner() != null) {
