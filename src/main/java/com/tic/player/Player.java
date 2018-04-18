@@ -21,10 +21,9 @@ public abstract class Player {
 	 * Instantiates a new player.
 	 *
 	 * @param label the label of the player
-	 * @param playfield the game play field
 	 * @throws ConfigurationException the configuration exception
 	 */
-	public Player(String label, Playfield playfield) throws ConfigurationException {
+	public Player(String label) throws ConfigurationException {
 		if (label == null || label.length() == 0) {
 			throw ConfigurationException.noPlayerName();
 		}
@@ -32,6 +31,13 @@ public abstract class Player {
 			throw ConfigurationException.invalidPlayerName(label);
 		}
 		this.label = label.charAt(0);
+	}
+	
+	/**
+	 * Sets the playfield reference
+	 * @param playfield the game playfield
+	 */
+	public void setPlayfield(Playfield playfield) {
 		this.playfield = playfield;
 	}
 	

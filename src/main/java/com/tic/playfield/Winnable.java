@@ -46,7 +46,6 @@ public class Winnable {
 			winnableRows.add(new Path(size));
 			winnableColumns.add(new Path(size));
 		}
-
 	}
 	
 	/**

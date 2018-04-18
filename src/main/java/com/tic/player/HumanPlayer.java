@@ -5,7 +5,6 @@ import java.util.Scanner;
 import com.tic.errors.ConfigurationException;
 import com.tic.errors.PlayException;
 import com.tic.game.Position;
-import com.tic.playfield.Playfield;
 
 /**
  * Represents human player
@@ -19,11 +18,10 @@ public class HumanPlayer extends Player {
 	 * Instantiates a new player.
 	 *
 	 * @param label the label of the player
-	 * @param playfield the game play field
 	 * @throws ConfigurationException the configuration exception
 	 */
-	public HumanPlayer(String label, Playfield playfield) throws ConfigurationException {
-		super(label, playfield);
+	public HumanPlayer(String label) throws ConfigurationException {
+		super(label);
 	}
 
 	/* (non-Javadoc)

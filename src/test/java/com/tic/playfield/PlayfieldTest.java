@@ -1,14 +1,16 @@
 package com.tic.playfield;
 
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import com.tic.errors.ConfigurationException;
+import org.junit.Test;
+
 import com.tic.errors.PlayException;
 import com.tic.game.Position;
 import com.tic.player.HumanPlayer;
 import com.tic.player.Player;
-
-import static org.junit.Assert.*;
 
 public class PlayfieldTest {
 	
@@ -18,45 +20,9 @@ public class PlayfieldTest {
 	private final static String A = "a";
 	private final static String B = "b";
 
-	@Test public void testNullConfiguration() {
-		try {
-			tested = new Playfield(null);
-			fail("Expected to fail");
-		} catch (Exception ex) {
-			assertTrue("Expected ConfigurationException", ex instanceof ConfigurationException);
-		}
-	}
-	
-	@Test public void testInvalidConfiguration() {
-		try {
-			tested = new Playfield("a");
-			fail("Expected to fail");
-		} catch (Exception ex) {
-			assertTrue("Expected ConfigurationException", ex instanceof ConfigurationException);
-		}
-	}
-
-	@Test public void testMinimalSize() {
-		try {
-			tested = new Playfield("" + (Playfield.MINIMAL_SIZE - 1));
-			fail("Expected to fail");
-		} catch (Exception ex) {
-			assertTrue("Expected ConfigurationException", ex instanceof ConfigurationException);
-		}
-	}
-
-	@Test public void testMaximalSize() {
-		try {
-			tested = new Playfield("" + (Playfield.MAXIMAL_SIZE + 1));
-			fail("Expected to fail");
-		} catch (Exception ex) {
-			assertTrue("Expected ConfigurationException", ex instanceof ConfigurationException);
-		}
-	}
-
 	@Test public void testValidConfiguration() {
 		try {
-			tested = new Playfield("" + (Playfield.MAXIMAL_SIZE - 1));
+			tested = new Playfield(10);
 			assertFalse("Expected not completed field", tested.isCompleted());
 		} catch (Exception ex) {
 			fail("Didn't expected to fail");
@@ -65,8 +31,9 @@ public class PlayfieldTest {
 	
 	@Test public void testInvalidPosition() {
 		try {
-			tested = new Playfield("" + SIZE);
-			Player playerA = new HumanPlayer(A, tested);
+			tested = new Playfield(SIZE);
+			Player playerA = new HumanPlayer(A);
+			playerA.setPlayfield(tested);
 			tested.takePosition(playerA, new Position(-1, -1));
 			fail("Expected to fail");
 		} catch (Exception ex) {
@@ -76,8 +43,9 @@ public class PlayfieldTest {
 	
 	@Test public void testInvalidPosition2() {
 		try {
-			tested = new Playfield("" + SIZE);
-			Player playerA = new HumanPlayer(A, tested);
+			tested = new Playfield(SIZE);
+			Player playerA = new HumanPlayer(A);
+			playerA.setPlayfield(tested);
 			tested.takePosition(playerA, new Position(SIZE, SIZE));
 			fail("Expected to fail");
 		} catch (Exception ex) {
@@ -87,8 +55,9 @@ public class PlayfieldTest {
 	
 	@Test public void testUnavailablePosition() {
 		try {
-			tested = new Playfield("" + SIZE);
-			Player playerA = new HumanPlayer(A, tested);
+			tested = new Playfield(SIZE);
+			Player playerA = new HumanPlayer(A);
+			playerA.setPlayfield(tested);
 			tested.takePosition(playerA, new Position(0, 0));
 			tested.takePosition(playerA, new Position(0, 0));
 			fail("Expected to fail");
@@ -99,12 +68,16 @@ public class PlayfieldTest {
 	
 	@Test public void testDraw() {
 		try {
-			tested = new Playfield("" + 3);
+			tested = new Playfield(3);
 			assertEquals("Expected incomplete status", Playfield.INCOMPLETE, tested.getResultMessage());
-			Player playerA = new HumanPlayer(A, tested);
-			Player playerB = new HumanPlayer(B, tested);
-			Player playerC = new HumanPlayer("C", tested);
-			Player playerD = new HumanPlayer("D", tested);
+			Player playerA = new HumanPlayer(A);
+			playerA.setPlayfield(tested);
+			Player playerB = new HumanPlayer(B);
+			playerB.setPlayfield(tested);
+			Player playerC = new HumanPlayer("C");
+			playerC.setPlayfield(tested);
+			Player playerD = new HumanPlayer("D");
+			playerD.setPlayfield(tested);
 			tested.takePosition(playerA, new Position(0, 0));
 			tested.takePosition(playerB, new Position(0, 1));
 			tested.takePosition(playerC, new Position(0, 2));
@@ -122,9 +95,10 @@ public class PlayfieldTest {
 	
 	@Test public void testWinner() {
 		try {
-			tested = new Playfield("" + 3);
+			tested = new Playfield(3);
 			assertEquals("Expected incomplete status", Playfield.INCOMPLETE, tested.getResultMessage());
-			Player playerA = new HumanPlayer(A, tested);
+			Player playerA = new HumanPlayer(A);
+			playerA.setPlayfield(tested);
 			for (int i = 0; i < SIZE; i += 1) {
 				tested.takePosition(playerA, new Position(0, i));
 			}
