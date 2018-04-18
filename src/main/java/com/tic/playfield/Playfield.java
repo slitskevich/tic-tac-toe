@@ -10,9 +10,6 @@ import com.tic.player.Player;
  */
 public class Playfield {
 	
-	final static int MINIMAL_SIZE = 3;
-	final static int MAXIMAL_SIZE = 10;
-	
 	/** The character to represent free play field position */
 	final static char EMPTY = ' ';
 	
@@ -40,24 +37,14 @@ public class Playfield {
 	/**
 	 * Instantiates a new play field.
 	 *
-	 * @param configuration the configuration of the play field: the dimension, the labels for all human players and finally the label of the computer player.
+	 * @param size the dimension of the play field board.
 	 * @throws ConfigurationException if play field configuration can't be read or is invalid
 	 */
-	public Playfield(String configuration) throws ConfigurationException {
-		if (configuration == null) {
-			throw ConfigurationException.sizeMissingError();
-		}
-		try {
-			size = Integer.parseInt(configuration);
-			if (size < MINIMAL_SIZE || size > MAXIMAL_SIZE) {
-				throw ConfigurationException.wrongSizeBounds(MINIMAL_SIZE, MAXIMAL_SIZE, size);
-			}
-			available = new Available(size);
-			board = new Board(size);
-			winnable = new Winnable(size);			
-		} catch (NumberFormatException e) {
-			throw ConfigurationException.wrongSizeFormat(configuration);
-		}		
+	public Playfield(int size) throws ConfigurationException {
+		this.size = size;
+		available = new Available(size);
+		board = new Board(size);
+		winnable = new Winnable(size);			
 	}
 	
 	/**

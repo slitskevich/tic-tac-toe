@@ -25,6 +25,15 @@ public class ConfigurationException extends Exception {
 	
 	/** Error message for wrong player name */
 	private static final String PLAYER_LABEL_ERROR = "Invalid player label. Should be a single character";
+	
+	/** General error message for invalid configuration */
+	private static final String INVALID_CONFIGURATION_ERROR = "Configuration is invalid";
+	
+	/** Error message for the invalid number of players configuration */
+	private static final String INVALID_PLAYERS_COUNT = "Invalid count of players";
+	
+	/** Error message for the repeating players names in the configuration */
+	private static final String DUPLICATED_PLAYERS = "Duplicated player labels. Please choose unique labels for every player";
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -65,6 +74,30 @@ public class ConfigurationException extends Exception {
 	 */
 	public static ConfigurationException invalidPlayerName(String label) {
 		return new ConfigurationException(PLAYER_LABEL_ERROR + (label != null ? ": " + label : ""));
+	}
+	
+	/**
+	 * Reports general invalid configuration error 
+	 * @return the configuration exception 
+	 */
+	public static ConfigurationException invalidConfiguration() {
+		return new ConfigurationException(INVALID_CONFIGURATION_ERROR);
+	}
+	
+	/**
+	 * Reports invalid number of players configuration 
+	 * @return the configuration exception 
+	 */
+	public static ConfigurationException invalidPlayersCount() {
+		return new ConfigurationException(INVALID_PLAYERS_COUNT);
+	}
+	
+	/**
+	 * Reports repeating player labels 
+	 * @return the configuration exception 
+	 */
+	public static ConfigurationException duplicatedPlayers() {
+		return new ConfigurationException(DUPLICATED_PLAYERS);
 	}
 	
 	/**

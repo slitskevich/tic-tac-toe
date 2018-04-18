@@ -1,14 +1,11 @@
 package com.tic.game;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintStream;
 import java.util.List;
 
 import com.tic.errors.ConfigurationException;
 import com.tic.errors.PlayException;
-import com.tic.player.ComputerPlayer;
-import com.tic.player.HumanPlayer;
+import com.tic.game.configuration.GameConfiguration;
 import com.tic.player.Player;
 import com.tic.playfield.Playfield;
 import com.tic.util.Random;
@@ -18,49 +15,46 @@ import com.tic.util.Random;
  */
 public class Game {
 	
-	/** Fixed number of human players */
-	final static int HUMAN_PLAYERS_COUNT = 2;
-	
 	/** The list of all game players. */
-	private List<Player> players = new ArrayList<Player>(HUMAN_PLAYERS_COUNT + 1);
+	private List<Player> players;
 	
 	/** The game play field. */
 	private Playfield playfield;
 	
+	private PrintStream output;
+	
 	/**
 	 * Instantiates and configures a new game.
 	 *
-	 * @param configurationReader the reader to read the configuration line by line.
+	 * @param configuration the game configuration.
+	 * @param output stream to print the game output
 	 * @throws ConfigurationException when configuration can't be read
 	 */
-	public Game(BufferedReader configurationReader) throws ConfigurationException {
-		try {			
-			playfield = new Playfield(configurationReader.readLine());
-			for (int i = 0; i < HUMAN_PLAYERS_COUNT; i += 1) {
-				players.add(new HumanPlayer(configurationReader.readLine(), playfield));
-			}
-			players.add(new ComputerPlayer(configurationReader.readLine(), playfield));
-		} catch (IOException e) {
-			throw ConfigurationException.configurationRead();
+	public Game(GameConfiguration configuration, PrintStream output) throws ConfigurationException {
+		playfield = new Playfield(configuration.getGameSize());
+		players = configuration.getPlayers();
+		for (Player next : players) {
+			next.setPlayfield(playfield);
 		}
+		this.output = output;
 	}
 	
 	/**
 	 * The game execution.
 	 */
 	public void play() {
-		System.out.println(playfield);
+		output.println(playfield);
 		Player player = randomPlayer();
 		do {
 			try {
 				player.move();
 				player = nextPlayer(player);
-				System.out.println(playfield);
+				output.println(playfield);
 			} catch (PlayException ex) {
-				System.out.println(ex.getMessage());
+				output.println(ex.getMessage());
 			}
 		} while (!playfield.isCompleted());
-		System.out.println(playfield.getResultMessage());
+		output.println(playfield.getResultMessage());
 	}
 	
 	/**
