@@ -35,6 +35,7 @@ public class Game {
 		players = configuration.getPlayers();
 		for (Player next : players) {
 			next.setPlayfield(playfield);
+			next.setOutput(output);
 		}
 		this.output = output;
 	}

@@ -26,7 +26,7 @@ public class ComputerPlayer extends Player {
 	public Position choosePosition() throws PlayException {
 		Position result = playfield.pickRandomPosition();
 		
-		System.out.println("User " + label + " move: " + result);
+		output.println("User " + label + " move: " + result);
 		
 		return result;
 	}

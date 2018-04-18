@@ -1,5 +1,7 @@
 package com.tic.player;
 
+import java.io.PrintStream;
+
 import com.tic.errors.ConfigurationException;
 import com.tic.errors.PlayException;
 import com.tic.game.Position;
@@ -16,6 +18,9 @@ public abstract class Player {
 	
 	/** The play field of the game. */
 	protected Playfield playfield;
+	
+	/** Messages output stream for the player */
+	protected PrintStream output;
 	
 	/**
 	 * Instantiates a new player.
@@ -39,6 +44,14 @@ public abstract class Player {
 	 */
 	public void setPlayfield(Playfield playfield) {
 		this.playfield = playfield;
+	}
+	
+	/**
+	 * Sets the messages output stream reference
+	 * @param output the stream to output messages
+	 */
+	public void setOutput(PrintStream output) {
+		this.output = output;
 	}
 	
 	/**

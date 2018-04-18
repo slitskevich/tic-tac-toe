@@ -41,6 +41,7 @@ public class PlayerTest {
 			Playfield field = new Playfield(3);
 			Player computer = new ComputerPlayer("C");
 			computer.setPlayfield(field);
+			computer.setOutput(System.out);
 			computer.move();
 			assertTrue("Hoped to find player cell", field.toString().indexOf('C') > -1);
 		} catch (Exception ex) {
