@@ -78,4 +78,11 @@ public class Available {
 			availableRowIndices.remove(new Integer(selection.getRow()));
 		}
 	}
+	
+	/**
+	 * @return the size of the structure
+	 */
+	public int getSize() {
+		return availableRows.size();
+	}
 }

@@ -1,9 +1,7 @@
-package com.tic.playfield;
+package com.tic.game;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tic.game.Position;
 
 /**
  * The Class represents the list of possible paths the player could fill in to win, e.g. the sequence of positions player could occupy.

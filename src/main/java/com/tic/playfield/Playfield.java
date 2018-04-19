@@ -11,25 +11,13 @@ import com.tic.player.Player;
 public class Playfield {
 	
 	/** The character to represent free play field position */
-	final static char EMPTY = ' ';
-	
-	/** The format of the message for the won game */
-	final static String WON_FORMAT = "%s won!";
-	
-	/** The message for the game draw */
-	final static String DRAW = "Draw!";
-	
-	/** The incomplete game status message */
-	final static String INCOMPLETE = "The game is not completed";
+	public final static char EMPTY = ' ';
 	
 	/** The data structure listing all available for moves play field positions */
 	private Available available;
 	
 	/** The full play field with all players labels */
 	private Board board;
-	
-	/** The data structure listing all play field paths that still can be used to win the game */
-	private Winnable winnable;
 	
 	/** The dimension of the play field */
 	int size;
@@ -44,26 +32,6 @@ public class Playfield {
 		this.size = size;
 		available = new Available(size);
 		board = new Board(size);
-		winnable = new Winnable(size);			
-	}
-	
-	/**
-	 * @return true, if the game is completed - won or draw; false otherwise
-	 */
-	public boolean isCompleted() {
-		return winnable.getWinner() != null || !winnable.haveWinnablePaths();
-	}
-	
-	/**
-	 * @return the result status message
-	 */
-	public String getResultMessage() {
-		if (winnable.getWinner() != null) {
-			return String.format(WON_FORMAT, winnable.getWinner().latestPlayer());
-		} else if (!winnable.haveWinnablePaths()) {
-			return DRAW;
-		}
-		return INCOMPLETE;
 	}
 	
 	/**
@@ -88,7 +56,6 @@ public class Playfield {
 			throw PlayException.unavaialblePosition();
 		} else {
 			available.updateAvailablePosition(nextMove);
-			winnable.updateWinnablePaths(nextMove, player.label);
 			board.occupyFieldPosition(nextMove, player.label);
 		}
 	}
@@ -108,6 +75,20 @@ public class Playfield {
 	 */
 	public String toString() {
 		return board.toString();
+	}
+	
+	/**
+	 * @return the play field board
+	 */
+	public Board getBoard() {
+		return board;
+	}
+	
+	/**
+	 * @return available for the move cells structure
+	 */
+	public Available getAvailable() {
+		return available;
 	}
 	
 }

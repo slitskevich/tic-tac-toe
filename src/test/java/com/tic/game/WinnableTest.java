@@ -1,8 +1,9 @@
-package com.tic.playfield;
+package com.tic.game;
 
 import org.junit.*;
 
 import com.tic.game.Position;
+import com.tic.game.Winnable;
 
 import static org.junit.Assert.*;
 

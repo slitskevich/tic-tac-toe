@@ -87,4 +87,11 @@ public class Board {
 		builder.append(NEW_LINE);
 		return builder;
 	}
+	
+	/**
+	 * @return board size
+	 */
+	public int getSize() {
+		return board.size();
+	}
 }

@@ -1,6 +1,10 @@
-package com.tic.playfield;
+package com.tic.game;
 
 import org.junit.*;
+
+import com.tic.game.Path;
+import com.tic.playfield.Playfield;
+
 import static org.junit.Assert.*;
 
 public class PathTest {

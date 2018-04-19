@@ -28,7 +28,7 @@ public class HumanPlayer extends Player {
 	 * @see com.tic.player.Player#choosePosition()
 	 */
 	@Override
-	protected Position choosePosition() throws PlayException {
+	public Position choosePosition() throws PlayException {
 		Position result = null;	
 		
 		output.println("Player " + label + ", enter next positon (row" + Position.SEPARATOR + "column - where 1" + Position.SEPARATOR + "1 is the top left corner): ");

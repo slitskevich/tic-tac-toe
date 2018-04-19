@@ -60,7 +60,7 @@ public abstract class Player {
 	 * @return selected position for the next move
 	 * @throws PlayException the play exception
 	 */
-	protected abstract Position choosePosition() throws PlayException;
+	public abstract Position choosePosition() throws PlayException;
 	
 	/**
 	 * Makes a new move in the game.

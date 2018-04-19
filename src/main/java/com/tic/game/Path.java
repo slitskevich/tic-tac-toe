@@ -1,4 +1,6 @@
-package com.tic.playfield;
+package com.tic.game;
+
+import com.tic.playfield.Playfield;
 
 /**
  * The class represents a sequence of cells on the play field which once occupied by a single player would represent a winning path.
